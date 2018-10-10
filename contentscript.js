@@ -1,9 +1,9 @@
-// ___      _   _            _  ____   _____ 
-//| _ ) ___| |_| |_ ___ _ _ | |/ /\ \ / / __|
-//| _ \/ -_)  _|  _/ -_) '_|| ' <  \ V / (__ 
-//|___/\___|\__|\__\___|_|  |_|\_\  \_/ \___|
-//
-//  Better Better Better!!!
+//	 ___      _   _            _  ____   _____ 
+//	| _ ) ___| |_| |_ ___ _ _ | |/ /\ \ / / __|
+//	| _ \/ -_)  _|  _/ -_) '_|| ' <  \ V / (__ 
+//	|___/\___|\__|\__\___|_|  |_|\_\  \_/ \___|
+//	
+//		Better Better Better!!!
 //
 /*
 
@@ -19,8 +19,8 @@
  しましょう。プルリクエストはいつでも受け付けています。
 
 */
-var version = "1.2.0"; // BetterKVCのバージョン
-var build = "20"; // BetterKVCのビルド番号
+var version = "1.3.0"; // BetterKVCのバージョン
+var build = "36"; // BetterKVCのビルド番号
 
 $(function(){
 	// レイアウトがtableベースでびっくりびっくり！
@@ -236,11 +236,6 @@ $(function(){
 		$(this).text(s); // 変更を適用
 	});
 });
-chrome.extension.onRequest.addListener ( // 上と基本的に同じことをする。何らかの障害で上のメソッドが正常に実行されなかった場合にボタンで発動
-    function(request, sender, sendResponse) {
-	alert("BetterKVC v"+version+" build"+build);
-    }
-)
 
 // BetterKVC API
 
@@ -267,8 +262,15 @@ function sidePanel(title, icon, body, to){
 	if($('#login-top-title').length){ // ログイン画面なら変更をキャンセルする
 		return; // ばいば～い
 	}
-	// 実際に要素を追加する。idとかそのまんまだから問題ありそうだけど多分大丈夫かなぁ
+	if(to == 2){
+		// どうしてこうまで複雑な構造なのか
+		body = body.split('[[[').join('<div id="webpage-list-title-box"> <div id="webpage-list-title-inner">').split(']]]').join('</div> </div>');
+		$('#area-m2').prepend('<div class="portlet portlet-l portlet-break" id="main-frame"><div class="portlet-box" id="main-frame-div" style="display: block; z-index: 0; opacity: 1;"><div id="main_information_menu"><div class="portlet-title clearfix" id="main_information_menu-title"> <img src="'+icon+'"><span>'+title+'</span> <input type="hidden" name="wfNm" id="wfNm" value="お知らせ"> <input type="hidden" name="wfNmEng" id="wfNmEng" value="Information"> '+body+'<div id="webpage-contents-list-footer-box" class="clearfix"><div id="webpage-contents-list-footer-inner"> &nbsp;&nbsp; </div></div></div></div></div></div>');
+		return;
+	}
+	// 実際に要素を追加する。idとかそのまんまだけど多分大丈夫かなぁ
 	$('#area-m'+to).prepend('<div class="portlet portlet-s portlet-break" id="wf_PTW0005000-s_20180524134229-box"> <div class="loading" id="wf_PTW0005000-s_20180524134229-loading" style=""></div> <div class="portlet-box" id="wf_PTW0005000-s_20180524134229"><div class="portlet-title clearfix" id="wf_PTW0005000-s_20180524134229-title"> <img src="'+icon+'"><span>'+title+'</span></div>'+body+'</div></div>');
+	return;
 }
 
 /*
@@ -286,7 +288,7 @@ function addTopMenu(text, icon, jumpto){
 
 /*
     addMenu
-    args0: string - id - ボタンID
+    args0: string - id - ボタンID (IDは tab-<id> の形式になります。)
     args0: string - text - ボタンテキスト
     args0: string - icon - ボタンアイコン
     args0: string - jumpto - クリック時のふるまい
@@ -295,7 +297,32 @@ function addTopMenu(text, icon, jumpto){
 
 function addMenu(id,text,icon,jumpto){
 	// jumptoはそのまま新しいタブで開く
-	$('#tab-end-of-dummy').before('<a href="'+jumpto+'" target="_blank"><div id="tab-"'+id+' class="tabcell" style="width: 69px; height: 61px;"><img src="'+icon+'" style="width: 32px; height: 32px; margin-left: 18px;"><p>'+text+'</p></div></a>');
+	$('#tab-end-of-dummy').before('<a href="'+jumpto+'" target="_blank"><div id="tab-'+id+'" class="tabcell" style="width: 69px; height: 61px;"><img src="'+icon+'" style="width: 32px; height: 32px; margin-left: 18px;"><p>'+text+'</p></div></a>');
+}
+
+/*
+    addMenuE
+    args0: string - id - ボタンID (IDは tab-<id> の形式になります。)
+    args0: string - text - ボタンテキスト
+    args0: string - icon - ボタンアイコン
+    上から二番目のシラバス等があるような場所にボタンを追加します。idを元にクリックイベントを取得してメニューを開く場合に使います。
+*/
+
+function addMenuE(id,text,icon){
+	// jumptoはそのまま新しいタブで開く
+	$('#tab-end-of-dummy').before('<div id="tab-'+id+'" class="tabcell" style="width: 69px; height: 61px;"><img src="'+icon+'" style="width: 32px; height: 32px; margin-left: 18px;"><p>'+text+'</p></div>');
+}
+
+/*
+    addSubMenu
+    args0: string - id - ボタンID
+    args0: string - text - ボタンテキスト
+    args0: string - icon - ボタンアイコン
+    KVCトップのお知らせや新着掲示のボタンがある辺りにボタンを追加します。
+*/
+
+function addSubMenu(id, text, icon){
+	$('#tabmenu-ul').prepend('<li class="menu-portlet" style=""><span id='+id+'> <img src="'+icon+'" height="48" width="48"> '+text+' </span></li>')
 }
 
 
@@ -321,6 +348,6 @@ function sleep(waitSec, callbackFunc) {
             clearInterval(id);
             if (callbackFunc) callbackFunc();
         }
-    }, 1000);
+    }, 5);
  
 }
