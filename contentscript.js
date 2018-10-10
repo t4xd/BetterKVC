@@ -19,8 +19,8 @@
  しましょう。プルリクエストはいつでも受け付けています。
 
 */
-var version = "1.3.0"; // BetterKVCのバージョン
-var build = "36"; // BetterKVCのビルド番号
+var version = "1.3.1"; // BetterKVCのバージョン
+var build = "39"; // BetterKVCのビルド番号
 
 $(function(){
 	// レイアウトがtableベースでびっくりびっくり！
@@ -265,11 +265,11 @@ function sidePanel(title, icon, body, to){
 	if(to == 2){
 		// どうしてこうまで複雑な構造なのか
 		body = body.split('[[[').join('<div id="webpage-list-title-box"> <div id="webpage-list-title-inner">').split(']]]').join('</div> </div>');
-		$('#area-m2').prepend('<div class="portlet portlet-l portlet-break" id="main-frame"><div class="portlet-box" id="main-frame-div" style="display: block; z-index: 0; opacity: 1;"><div id="main_information_menu"><div class="portlet-title clearfix" id="main_information_menu-title"> <img src="'+icon+'"><span>'+title+'</span> <input type="hidden" name="wfNm" id="wfNm" value="お知らせ"> <input type="hidden" name="wfNmEng" id="wfNmEng" value="Information"> '+body+'<div id="webpage-contents-list-footer-box" class="clearfix"><div id="webpage-contents-list-footer-inner"> &nbsp;&nbsp; </div></div></div></div></div></div>');
+		$('#area-m2').prepend('<div class="portlet portlet-l portlet-break" id="main-frame"><div class="portlet-box" id="m2-panels"><div id="m2-panels"><div class="portlet-title clearfix" id="m2-panels"><img id="panel-icon" src="'+icon+'"><span id="title">'+title+'</span></div> '+body+'<div id="m2-panels-footer" class="clearfix"><div id="m2-panels-footer-inner">&nbsp;&nbsp;</div></div></div></div></div></div>');
 		return;
 	}
-	// 実際に要素を追加する。idとかそのまんまだけど多分大丈夫かなぁ
-	$('#area-m'+to).prepend('<div class="portlet portlet-s portlet-break" id="wf_PTW0005000-s_20180524134229-box"> <div class="loading" id="wf_PTW0005000-s_20180524134229-loading" style=""></div> <div class="portlet-box" id="wf_PTW0005000-s_20180524134229"><div class="portlet-title clearfix" id="wf_PTW0005000-s_20180524134229-title"> <img src="'+icon+'"><span>'+title+'</span></div>'+body+'</div></div>');
+	// 実際に要素を追加する。
+	$('#area-m'+to).prepend('<div class="portlet portlet-s portlet-break" id="bkvc-panels"><div class="portlet-box" id="bkvc-panels"><div class="portlet-title clearfix" id="bkvc-panels"> <img src="'+icon+'"><span>'+title+'</span></div>'+body+'</div></div>');
 	return;
 }
 
@@ -337,7 +337,7 @@ function addTopMenuM(){
 }
 
 function sidePanelM(){
-	$('#area-m3').prepend('<div class="portlet portlet-s portlet-break" id="wf_PTW0005000-s_20180524134229-box"> <div class="loading" id="wf_PTW0005000-s_20180524134229-loading" style=""></div> <div class="portlet-box" id="wf_PTW0005000-s_20180524134229"><div class="portlet-title clearfix" id="wf_PTW0005000-s_20180524134229-title"> <img src="https://i.imgur.com/tDVHNN1.png"><span>BetterKVCからのお知らせ</span></div><b>BetterKVCへようこそ。</b><br>BetterKVCの詳しい使い方を見るには、右上のBetterKVCのヘルプと書かれたボタンを押してください。</div></div>');
+	$('#area-m3').prepend('<div class="portlet portlet-s portlet-break" id="m3-panel"><div class="portlet-box" id="m3-panel"><div class="portlet-title clearfix" id="m3-panel"> <img src="https://i.imgur.com/tDVHNN1.png"><span>BetterKVCからのお知らせ</span></div><b>BetterKVCへようこそ。</b><br>BetterKVCの詳しい使い方を見るには、右上のBetterKVCのヘルプと書かれたボタンを押してください。</div></div>');
 }
 
 function sleep(waitSec, callbackFunc) {
