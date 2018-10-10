@@ -19,7 +19,7 @@
  しましょう。プルリクエストはいつでも受け付けています。
 
 */
-var version = "1.1.0"; // BetterKVCのバージョン
+var version = "1.2.0"; // BetterKVCのバージョン
 var build = "20"; // BetterKVCのビルド番号
 
 $(function(){
