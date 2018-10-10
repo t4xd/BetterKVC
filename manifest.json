@@ -1,0 +1,33 @@
+{
+	"manifest_version": 2,
+	"name": "BetterKVC",
+	"description": "Improve the design and function of KVC.",
+	"version": "1.1.0",
+	"icons": {
+  		"16": "icon16.png",
+  		"48": "icon48.png",
+  		"64": "icon64.png",
+   		"128": "icon128.png"
+	},
+	"browser_action": {
+		"default_icon": "icon.png",
+		"default_title": "BetterKVC",
+		"default_popup" : "popup.html"
+	},
+	"content_scripts": [
+		{
+			"matches":  ["http://kvc.osaka-ue.ac.jp/*", "https://kvc.osaka-ue.ac.jp/*"],
+			"js": ["jquery.min.js","contentscript.js"],
+                        "run_at": "document_start"
+		}
+	],
+	"background": {
+		"scripts": ["jquery.min.js","background.js"],
+		"persistent": true
+	},
+	"permissions": [
+		"tabs",
+		"*://*.aethernote.net/*",
+		"*://kvc.osaka-ue.ac.jp/*"
+	]
+}
