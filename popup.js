@@ -1,4 +1,9 @@
 ﻿$(document).ready(function() {
+	var userAgent = window.navigator.userAgent;
+	if(!userAgent.includes("Chrome")){
+		alert("プラグイン機能はGoogle Chromeでのみ利用できます。");
+return;
+	}
 	var c2 = localStorage.getItem("plugins");
 	var c = [];
 	try {

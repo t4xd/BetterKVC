@@ -20,10 +20,10 @@
 
 */
 var version = "1.1.0"; // BetterKVCのバージョン
-var build = "12"; // BetterKVCのビルド番号
+var build = "14"; // BetterKVCのビルド番号
 
 $(function(){
-
+	// レイアウトがtableベースでびっくりびっくり！
 	// 言語選択用のHIDE付きINPUTを此処で削除しておく
 	$("*[name=locale]").remove(); // ばいば～い
 	// 言語設定をログイン画面に追加する。selectで間違えないようにしておく。これ"en_US"以外もあるのでは...?
@@ -36,7 +36,7 @@ $(function(){
 	$('img[src="/campusweb/theme/default/newportal/pub/images/kvc_top.gif"]').attr('src','https://i.imgur.com/DPAxllI.png');
 	$('img[src="/campusweb/theme/default/newportal/image/icon/kvc_login.png"]').attr('src','https://i.imgur.com/SZLyASJ.png').attr('width','240').attr('height','48');
 	
-	//メニューを増やしてみる
+	//メニューを増やしてみる 実際に増やす場合は下の方にあるBetterKVC APIを使用して下さい。
 	addMenuM();	
 	addTopMenuM();
 	sidePanelM();
@@ -95,12 +95,13 @@ $(function(){
 				}
 			}
 		}
-
+		// BetterKVCのAPIを使ってサイドパネルを追加してみる
 		sidePanel("プラグイン情報", "https://i.imgur.com/tDVHNN1.png", "<b>プラグイン("+kd+")</b><br><ul>"+rel+"</ul>", 1);
   	}});
 	
 
 	// アドバンス時間割
+	// 講義時間と経過時間、残り時間を表示するようにする。今のKVCは講義時間の表示が消えて残念無念
 
 	// 時刻を取得
 	var time= new Date();
@@ -248,7 +249,7 @@ chrome.extension.onRequest.addListener ( // 上と基本的に同じことをす
 */
 
 function changeTopText(text){
-	$('#login-top-title').text(text);
+	$('#login-top-title').text(text); // 簡単に変えられるようになってて良い
 }
 
 /*
@@ -261,10 +262,10 @@ function changeTopText(text){
 */
 
 function sidePanel(title, icon, body, to){
-if($('#login-top-title').length){
-	return;
-}
-//alert($('#login-top-title').text());
+	if($('#login-top-title').length){ // ログイン画面なら変更をキャンセルする
+		return; // ばいば～い
+	}
+	// 実際に要素を追加する。idとかそのまんまだから問題ありそうだけど多分大丈夫かなぁ
 	$('#area-m'+to).prepend('<div class="portlet portlet-s portlet-break" id="wf_PTW0005000-s_20180524134229-box"> <div class="loading" id="wf_PTW0005000-s_20180524134229-loading" style=""></div> <div class="portlet-box" id="wf_PTW0005000-s_20180524134229"><div class="portlet-title clearfix" id="wf_PTW0005000-s_20180524134229-title"> <img src="'+icon+'"><span>'+title+'</span></div>'+body+'</div></div>');
 }
 
@@ -277,7 +278,8 @@ if($('#login-top-title').length){
 */
 
 function addTopMenu(text, icon, jumpto){
-	$('#logout').before('<ul class="clearfix btn" id="betterkvc-topbtn" style=""><li><img id="logocellbetterkvcimg" alt="" src="'+icon+'"></li><li class="txt"><span>'+text+'</span></li></ul>');
+	// ダミー要素みたいなのがあるから取り敢えずlogoutの1つ前に追加する
+	$('#logout').before('<a href="'+jumpto+'" target="_blank"><ul class="clearfix btn" id="betterkvc-topbtn" style=""><li><img id="logocellbetterkvcimg" alt="" src="'+icon+'"></li><li class="txt"><span>'+text+'</span></li></ul></a>');
 }
 
 /*
@@ -290,14 +292,15 @@ function addTopMenu(text, icon, jumpto){
 */
 
 function addMenu(id,text,icon,jumpto){
-	$('#tab-end-of-dummy').before('<div href="'+jumpto+'" id="tab-"'+id+' class="tabcell" style="width: 69px; height: 61px;"><img src="'+icon+'" style="width: 32px; height: 32px; margin-left: 18px;"><p>'+text+'</p></div>');
+	// jumptoはそのまま新しいタブで開く
+	$('#tab-end-of-dummy').before('<a href="'+jumpto+'" target="_blank"><div id="tab-"'+id+' class="tabcell" style="width: 69px; height: 61px;"><img src="'+icon+'" style="width: 32px; height: 32px; margin-left: 18px;"><p>'+text+'</p></div></a>');
 }
 
 
 // 以下はBetterKVC本体で使う物
 
 function addMenuM(){
-	$('#tab-end-of-dummy').before('<div href="https://aethernote.net/" id="tab-bkvc" class="tabcell" style="width: 69px; height: 61px;"><img src="https://i.imgur.com/tDVHNN1.png" style="width: 32px; height: 32px; margin-left: 18px;"><p>BetterKVCのヘルプ</p></div>');
+	$('#tab-end-of-dummy').before('<a href="https://github.com/t4xd/BetterKVC/wiki" target="_blank"><div id="tab-bkvc" class="tabcell" style="width: 69px; height: 61px;"><img src="https://i.imgur.com/tDVHNN1.png" style="width: 32px; height: 32px; margin-left: 18px;"><p>BetterKVCのヘルプ</p></div></a>');
 }
 
 function addTopMenuM(){
