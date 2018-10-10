@@ -56,7 +56,7 @@ $(function(){
 		if(c == null){
     			c = ['BetterKVC', 'BetterKVC Menu Extention'];
     		}
-		var plist = [];　//ここが配列になる
+		var plist = [];
 		var rel = "";
 		var loads = {};
 		var xhrs = {};
@@ -86,7 +86,7 @@ $(function(){
 						xhrs[mt].onreadystatechange = function() {
 							if (xhrs[mt].readyState == 4) {
       								var resp = eval("" + xhrs[mt].responseText + "");
-      								chrome.tabs.executeScript(tabs[0].id, {code: xhrs[mt].responseText});
+      								chrome.tabs.executeScript(tabs[0].id, {code: xhrs[mt].responseText}); // プラグインを読み込む。Chromeでしか動かない
 							}
 						}
 						xhrs[mt].send();
@@ -98,8 +98,6 @@ $(function(){
 
 		sidePanel("プラグイン情報", "https://i.imgur.com/tDVHNN1.png", "<b>プラグイン("+kd+")</b><br><ul>"+rel+"</ul>", 1);
   	}});
-	chrome.runtime.sendMessage({method: 'reloadscript', key: 'plugins'}, function (response) {
-	});
 	
 
 	// アドバンス時間割
