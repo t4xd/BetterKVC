@@ -19,17 +19,14 @@ return;
 	}
 	var plist = new Array();
 	for (var i = 0; i < c.length; i++) {
-		if (!c[i].includes("https://aethernote.net/bkvc/") || !c[i].includes(".js")) {
-			alert("プラグイン " + m + " は非対応です。");
-		}
-		var name = c[i].replace("https://aethernote.net/bkvc/", "").replace(".js",
-			"");
-		var rel = '<button id="rem" class="square_btn" name="' + name +
-			'">X</button></li>';
-		if (name == "BetterKVC" || name == "BKVCLoader") {
+			var name = c[i].replace("https://hastebin.com/raw/", "").replace(".js",
+				"").replace("https://aethernote.net/bkvc/", "").replace("https://paste.myftb.de/raw/", "");
+		var rel = '<button id="rem" class="square_btn" name="' + c[i] +
+			'">削除</button></li>';
+		if (name == "AdvancedKVC") {
 			rel = "";
 		}
-		plist.push('<li name="' + name + '">' + name + ' - Ver 1.0.0 ' + rel); //ここにpush()がくる
+		plist.push('<li name="' + name + '">' + name + ' ' + rel); //ここにpush()がくる
 	}
 	document.getElementById('plugins').innerHTML = plist.join('');
 });
@@ -48,31 +45,26 @@ $(document).on("click", "#add", function() {
 		c = ['BetterKVC', 'BetterKVC Menu Extention'];
 	}
 	var m = $("#plugin-url").val();
-	if (!m.includes("https://aethernote.net/bkvc/") || !m.includes(".js")) {
-		alert("プラグイン " + m + " は非対応です。");
-	} else {
 		c.push(m);
 		localStorage.setItem("plugins", c);
 		//$("#pluginlist").val(c);
-	}
+	
 	var plist = [];
 	for (var i = 0; i < c.length; i++) {
-		if (!c[i].includes("https://aethernote.net/bkvc/") || !c[i].includes(".js")) {
-			alert("プラグイン " + m + " は非対応です。");
-		} else {
-			var name = c[i].replace("https://aethernote.net/bkvc/", "").replace(".js",
-				"");
-			var rel = '<button id="rem" class="square_btn" name="' + name +
-				'">X</button></li>';
-			if (name == "BetterKVC" || name == "BKVCLoader") {
+			var name = c[i].replace("https://hastebin.com/raw/", "").replace(".js",
+				"").replace("https://aethernote.net/bkvc/", "").replace("https://paste.myftb.de/raw/", "");
+			var rel = '<button id="rem" class="square_btn" name="' + c[i] +
+				'">削除</button></li>';
+		if (name == "AdvancedKVC") {
 				rel = "";
 			}
-			plist.push('<li name="' + name + '">' + name + ' - Ver 1.0.0 ' + rel); //ここにpush()がくる
-		}
+			plist.push('<li name="' + name + '">' + name + ' ' + rel); //ここにpush()がくる
+		
 	}
 	document.getElementById('plugins').innerHTML = plist.join('');
 });
 $(document).on("click", "#rem", function() {
+	console.log("CLICKED");
 	var c2 = localStorage.getItem("plugins");
 	var c = [];
 	try {
@@ -89,20 +81,17 @@ $(document).on("click", "#rem", function() {
 	});
 	console.log("REMOVED - " + id);
 	localStorage.setItem("plugins", c);
-	var plist = new Array(); //ここが配列になる
+	var plist = []; //ここが配列になる
 	for (var i = 0; i < c.length; i++) {
-		if (!c[i].includes("https://aethernote.net/bkvc/") || !c[i].includes(".js")) {
-			alert("プラグイン " + m + " は非対応です。");
-		} else {
-			var name = c[i].replace("https://aethernote.net/bkvc/", "").replace(".js",
-				"");
-			var rel = '<button id="rem" class="square_btn" name="' + name +
-				'">X</button></li>';
-			if (name == "BetterKVC" || name == "BKVCLoader") {
+			var name = c[i].replace("https://hastebin.com/raw/", "").replace(".js",
+				"").replace("https://aethernote.net/bkvc/", "").replace("https://paste.myftb.de/raw/", "");
+			var rel = '<button id="rem" class="square_btn" name="' + c[i] +
+				'">削除</button></li>';
+		if (name == "AdvancedKVC") {
 				rel = "";
 			}
-			plist.push('<li name="' + name + '">' + name + ' - Ver 1.0.0 ' + rel); //ここにpush()がくる
-		}
+			plist.push('<li name="' + name + '">' + name + ' ' + rel); //ここにpush()がくる
+		
 	}
 	document.getElementById('plugins').innerHTML = plist.join('');
 });

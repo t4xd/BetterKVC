@@ -20,7 +20,7 @@
 
 */
 var version = "1.1.0"; // BetterKVCのバージョン
-var build = "14"; // BetterKVCのビルド番号
+var build = "20"; // BetterKVCのビルド番号
 
 $(function(){
 	// レイアウトがtableベースでびっくりびっくり！
@@ -63,9 +63,8 @@ $(function(){
 		var count = 0;
 		var kd = 0;
 		for (var i=0; i<c.length;i++){
-    			if(!c[i].includes("https://aethernote.net/bkvc/") || !c[i].includes(".js")){
-    			}else{
-				var name = c[i].replace("https://aethernote.net/bkvc/","").replace(".js","");
+			var name = c[i].replace("https://hastebin.com/raw/", "").replace(".js",
+				"").replace("https://aethernote.net/bkvc/", "").replace("https://paste.myftb.de/raw/", "");
 				rel = rel + '<li>'+name+'</li>';
 				kd++;
 				//alert(run+" == "+name);
@@ -78,6 +77,9 @@ $(function(){
 						var mt = count;
 						count++;
 						var ut = loads[mt]+"";
+						if(!ut.includes(".js")){
+							ut = ut + ".js";
+						}
 						name = ut.replace("https://aethernote.net/bkvc/","").replace(".js","");
 						rel = rel + '<li>'+name+'</li>';
 						run = name;
@@ -93,7 +95,7 @@ $(function(){
 						}catch(e){}
 					});
 				}
-			}
+			
 		}
 		// BetterKVCのAPIを使ってサイドパネルを追加してみる
 		sidePanel("プラグイン情報", "https://i.imgur.com/tDVHNN1.png", "<b>プラグイン("+kd+")</b><br><ul>"+rel+"</ul>", 1);

@@ -14,12 +14,10 @@ var c2 = localStorage.getItem("plugins");
 		var plist = [];　//ここが配列になる
 		var rel = "";
 		for (var i=0; i<c.length;i++){
-    			if(!c[i].includes("https://aethernote.net/bkvc/") || !c[i].includes(".js")){
-    			}else{
 				var name = c[i].replace("https://aethernote.net/bkvc/","").replace(".js","");
 				rel = rel + '<li>'+name+'</li>';
 				chrome.tabs.executeScript(null,{file: c[i]}, function(){});
-			}
+		
 		}
 
 });
