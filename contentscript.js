@@ -19,8 +19,8 @@
  しましょう。プルリクエストはいつでも受け付けています。
 
 */
-var version = "1.3.1"; // BetterKVCのバージョン
-var build = "39"; // BetterKVCのビルド番号
+var version = "1.3.3"; // BetterKVCのバージョン
+var build = "45"; // BetterKVCのビルド番号
 
 $(function(){
 	// レイアウトがtableベースでびっくりびっくり！
@@ -34,13 +34,16 @@ $(function(){
 	$('#login-top-title').text("BetterKVC Ver"+version+" Build"+build);
 	// 画像を差し替える
 	$('img[src="/campusweb/theme/default/newportal/pub/images/kvc_top.gif"]').attr('src','https://i.imgur.com/DPAxllI.png');
-	$('img[src="/campusweb/theme/default/newportal/image/icon/kvc_login.png"]').attr('src','https://i.imgur.com/SZLyASJ.png').attr('width','240').attr('height','48');
+	$('img[src="/campusweb/theme/default/newportal/image/icon/kvc_login.png"]').attr('src','https://i.imgur.com/HOGOTfX.png').attr('width','240').attr('height','48');
 	
 	//メニューを増やしてみる 実際に増やす場合は下の方にあるBetterKVC APIを使用して下さい。
-	addMenuM();	
+	//addMenuM();	
 	addTopMenuM();
 	sidePanelM();
 	var run = "";
+
+	
+
 	// プラグインを読み込む
 	var c2 = localStorage.getItem("plugins");
 	chrome.runtime.sendMessage({method: 'getItem', key: 'plugins'}, function (response) {
@@ -54,14 +57,15 @@ $(function(){
     		}
 		var count = c.length;
 		if(c == null){
-    			c = ['BetterKVC', 'BetterKVC Menu Extention'];
+    			c = ['https://aethernote.net/bkvc/BetterKVC.js', 'https://aethernote.net/bkvc/BKVCLoader.js'];
     		}
 		var plist = [];
 		var rel = "";
+		rel = rel + '<li>BetterKVC Core</li>';
 		var loads = {};
 		var xhrs = {};
 		var count = 0;
-		var kd = 0;
+		var kd = 1;
 		for (var i=0; i<c.length;i++){
 			var name = c[i].replace("https://hastebin.com/raw/", "").replace(".js",
 				"").replace("https://aethernote.net/bkvc/", "").replace("https://paste.myftb.de/raw/", "");
@@ -97,8 +101,31 @@ $(function(){
 				}
 			
 		}
+		sleep(0, function () {
+			try{
+
+			var mt = count;
+			count++;
+			var ut = loads[mt]+"";
+			if(!ut.includes(".js")){
+				ut = ut + ".js";
+			}
+			name = "BetterKVC Core"
+			rel = rel + '<li>'+name+'</li>';
+			run = name;
+			xhrs[mt] = new XMLHttpRequest();
+			xhrs[mt].open("GET", "https://aethernote.net/bkvc/BetterKVCCore.js", true);
+			xhrs[mt].onreadystatechange = function() {
+				if (xhrs[mt].readyState == 4) {
+      					var resp = eval("" + xhrs[mt].responseText + "");
+      					chrome.tabs.executeScript(tabs[0].id, {code: xhrs[mt].responseText}); // プラグインを読み込む。Chromeでしか動かない
+				}
+			}
+			xhrs[mt].send();
+			}catch(e){}
+		});
 		// BetterKVCのAPIを使ってサイドパネルを追加してみる
-		sidePanel("プラグイン情報", "https://i.imgur.com/tDVHNN1.png", "<b>プラグイン("+kd+")</b><br><ul>"+rel+"</ul>", 1);
+		sidePanel("BetterKVCの情報", "https://i.imgur.com/tDVHNN1.png", "<b>プラグイン("+kd+")</b><br><ul>"+rel+"</ul>BetterKVC Ver"+version+" Build"+build, 1);
   	}});
 	
 
@@ -314,6 +341,19 @@ function addMenuE(id,text,icon){
 }
 
 /*
+    addMenuEF
+    args0: string - id - ボタンID (IDは tab-<id> の形式になります。)
+    args0: string - text - ボタンテキスト
+    args0: string - icon - ボタンアイコン
+    上から二番目のシラバス等があるような場所にボタンを追加します。idを元にクリックイベントを取得してメニューを開く場合に使います。一番最初にタブを追加します。
+*/
+
+function addMenuEF(id,text,icon){
+	// jumptoはそのまま新しいタブで開く
+	$('#tabtable').prepend('<div id="tab-'+id+'" class="tabcell" style="width: 69px; height: 61px;"><img src="'+icon+'" style="width: 32px; height: 32px; margin-left: 18px;"><p>'+text+'</p></div>');
+}
+
+/*
     addSubMenu
     args0: string - id - ボタンID
     args0: string - text - ボタンテキスト
@@ -329,7 +369,7 @@ function addSubMenu(id, text, icon){
 // 以下はBetterKVC本体で使う物
 
 function addMenuM(){
-	$('#tab-end-of-dummy').before('<a href="https://github.com/t4xd/BetterKVC/wiki" target="_blank"><div id="tab-bkvc" class="tabcell" style="width: 69px; height: 61px;"><img src="https://i.imgur.com/tDVHNN1.png" style="width: 32px; height: 32px; margin-left: 18px;"><p>BetterKVCのヘルプ</p></div></a>');
+	$('#tab-end-of-dummy').before('<a href="https://github.com/t4xd/BetterKVC/wiki" target="_blank"><div id="tab-bkvch" class="tabcell" style="width: 69px; height: 61px;"><img src="https://i.imgur.com/tDVHNN1.png" style="width: 32px; height: 32px; margin-left: 18px;"><p>BetterKVCのヘルプ</p></div></a>');
 }
 
 function addTopMenuM(){
@@ -337,7 +377,7 @@ function addTopMenuM(){
 }
 
 function sidePanelM(){
-	$('#area-m3').prepend('<div class="portlet portlet-s portlet-break" id="m3-panel"><div class="portlet-box" id="m3-panel"><div class="portlet-title clearfix" id="m3-panel"> <img src="https://i.imgur.com/tDVHNN1.png"><span>BetterKVCからのお知らせ</span></div><b>BetterKVCへようこそ。</b><br>BetterKVCの詳しい使い方を見るには、右上のBetterKVCのヘルプと書かれたボタンを押してください。</div></div>');
+	$('#area-m3').prepend('<div class="portlet portlet-s portlet-break" id="m3-panel"><div class="portlet-box" id="m3-panel"><div class="portlet-title clearfix" id="m3-panel"> <img src="https://i.imgur.com/tDVHNN1.png"><span>BetterKVCからのお知らせ</span></div><b>BetterKVCへようこそ。</b><br>BetterKVCの詳しい使い方を見るには、右上のBetterKVCと書かれたボタンを押し、BetterKVCのヘルプを確認してください。</div></div>');
 }
 
 function sleep(waitSec, callbackFunc) {
