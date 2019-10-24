@@ -49,3 +49,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       break;
   }
 });
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if (request.contentScriptQuery == "DummyRequest") {
+        $.get("https://kvc.osaka-ue.ac.jp/campusweb/campusportal.do?page=main&tabId=home");
+      return true;  // Will respond asynchronously.
+    }
+  });
