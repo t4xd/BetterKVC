@@ -4,7 +4,7 @@
 	"manifest_version": 2,
 	"name": "BetterKVC",
 	"description": "Improve the design and function of KVC.",
-	"version": "1.5",
+	"version": "1.6",
 	"icons": {
   		"16": "icon16.png",
   		"48": "icon48.png",
@@ -30,7 +30,9 @@
 	"permissions": [
 		"tabs",
 		"*://*.hastebin.com/*",
+		"*://*.pastebin.com/*",
 		"*://*.aethernote.net/*",
+		"*://*.githubusercontent.com/*",
 		"*://kvc.osaka-ue.ac.jp/*"
 	]
 }

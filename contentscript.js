@@ -19,8 +19,8 @@
  しましょう。プルリクエストはいつでも受け付けています。
 
 */
-var version = "1.5"; // BetterKVCのバージョン
-var build = "106"; // BetterKVCのビルド番号
+var version = "1.6"; // BetterKVCのバージョン
+var build = "124"; // BetterKVCのビルド番号
 $(function () {
   // レイアウトがtableベースでびっくりびっくり！
   // 言語選択用のHIDE付きINPUTを此処で削除しておく
@@ -34,8 +34,8 @@ $(function () {
   // 上の文字をBetterKVCとバージョン/ビルド番号に変える。
   $('#login-top-title').text("BetterKVC Ver" + version + " Build" + build);
   // 画像を差し替える
-  $('img[src="/campusweb/theme/default/newportal/pub/images/kvc_top.gif"]').attr('src', 'https://i.imgur.com/DPAxllI.png');
-  $('img[src="/campusweb/theme/default/newportal/image/icon/kvc_login.png"]').attr('src', 'https://i.imgur.com/HOGOTfX.png').attr('width', '240').attr('height', '48');
+  $('img[src="/campusweb/theme/default/newportal/pub/images/kvc_top.gif"]').attr('src', 'https://i.imgur.com/JkBqbIr.png');
+  $('img[src="/campusweb/theme/default/newportal/image/icon/kvc_login.png"]').attr('src', 'https://i.imgur.com/gIYd5Vk.png').attr('width', '160').attr('height', '48');
   //メニューを増やしてみる 実際に増やす場合は下の方にあるBetterKVC APIを使用して下さい。
   //addMenuM();
   //現在時刻を表示する関数
@@ -116,7 +116,9 @@ $(function () {
     method: 'getItem',
     key: 'plugins'
   }, function (response) {
+
     if (response.data) {
+// HERE
       c2 = response.data;
       var c = [];
       try {
@@ -130,8 +132,11 @@ $(function () {
       if (path.includes("tabId=gk") || path.includes("tabId=rs") || path.includes("tabId=si")) { // セキュリティ上学生情報や成績情報の表示中はプラグインを読み込まない
         canrun = false;
       }
+    console.log("aaaa2a");
       for (var i = 0; i < c.length; i++) {
+    console.log("aaaaxa");
         if (canrun) {
+    console.log("aaaaa");
           var name = c[i].replace("https://hastebin.com/raw/", "").replace(".js", "").replace("https://aethernote.net/bkvc/", "").replace("https://paste.myftb.de/raw/", "");
           rel = rel + '<li>' + name + '</li>';
           kd++;
@@ -167,14 +172,24 @@ $(function () {
         }
       }
       var inf = "";
+    console.log("aaa223aa");
       if (!canrun) {
         // BetterKVCのAPIを使ってサイドパネルを追加してみる
-        sidePanel("BetterKVCの情報", "https://i.imgur.com/tDVHNN1.png", "<b>プラグイン(1)</b><br><ul>" + rel + "</ul><b>セキュリティロック中</b><br>このページではプラグインが実行されません<br>BetterKVC Ver" + version + " Build" + build, 1);
+        sidePanel("BetterKVCの情報", "https://i.imgur.com/YHw3Ror.png", "<b>プラグイン(1)</b><br><ul>" + rel + "</ul><b>セキュリティロック中</b><br>このページではプラグインが実行されません<br>BetterKVC Ver" + version + " Build" + build, 1);
       } else {
         // BetterKVCのAPIを使ってサイドパネルを追加してみる
-        sidePanel("BetterKVCの情報", "https://i.imgur.com/tDVHNN1.png", inf + "<b>プラグイン(" + kd + ")</b><br><ul>" + rel + "</ul>BetterKVC Ver" + version + " Build" + build, 1);
+        sidePanel("BetterKVCの情報", "https://i.imgur.com/YHw3Ror.png", inf + "<b>プラグイン(" + kd + ")</b><br><ul>" + rel + "</ul>BetterKVC Ver" + version + " Build" + build, 1);
       }
-    }
+    }else{
+
+      if (!canrun) {
+        // BetterKVCのAPIを使ってサイドパネルを追加してみる
+        sidePanel("BetterKVCの情報", "https://i.imgur.com/YHw3Ror.png", "<b>プラグイン(1)</b><br><ul>" + rel + "</ul><b>セキュリティロック中</b><br>このページではプラグインが実行されません<br>BetterKVC Ver" + version + " Build" + build, 1);
+      } else {
+        // BetterKVCのAPIを使ってサイドパネルを追加してみる
+        sidePanel("BetterKVCの情報", "https://i.imgur.com/YHw3Ror.png", "<b>プラグイン(1)</b><br><ul>" + rel + "</ul>BetterKVC Ver" + version + " Build" + build, 1);
+      }
+}
   });
   // アドバンス時間割
   // 講義時間と経過時間、残り時間を表示するようにする。今のKVCは講義時間の表示が消えて残念無念
@@ -402,15 +417,15 @@ function addSubMenu(id, text, icon) {
 }
 // 以下はBetterKVC本体で使う物
 function addMenuM() {
-  $('#tab-end-of-dummy').before('<a href="https://github.com/t4xd/BetterKVC/wiki" target="_blank"><div id="tab-bkvch" class="tabcell" style="width: 69px; height: 61px;"><img src="https://i.imgur.com/tDVHNN1.png" style="width: 32px; height: 32px; margin-left: 18px;"><p>BetterKVCのヘルプ</p></div></a>');
+  $('#tab-end-of-dummy').before('<a href="https://github.com/t4xd/BetterKVC/wiki" target="_blank"><div id="tab-bkvch" class="tabcell" style="width: 69px; height: 61px;"><img src="https://i.imgur.com/YHw3Ror.png" style="width: 32px; height: 32px; margin-left: 18px;"><p>BetterKVCのヘルプ</p></div></a>');
 }
 
 function addTopMenuM() {
-  $('#logout').before('<ul class="clearfix btn" id="betterkvc-topbtn" style=""><li><img id="logocellbetterkvcimg" alt="" src="https://i.imgur.com/tDVHNN1.png"></li><li class="txt"><span>BetterKVC b' + build + '</span></li></ul>');
+  $('#logout').before('<ul class="clearfix btn" id="betterkvc-topbtn" style=""><li><img id="logocellbetterkvcimg" alt="" src="https://i.imgur.com/YHw3Ror.png"></li><li class="txt"><span>BetterKVC b' + build + '</span></li></ul>');
 }
 
 function sidePanelM() {
-  $('#area-m3').prepend('<div class="portlet portlet-s portlet-break" id="m3-panel"><div class="portlet-box" id="m3-panel"><div class="portlet-title clearfix" id="m3-panel"> <img src="https://i.imgur.com/tDVHNN1.png"><span>BetterKVCからのお知らせ</span></div><b>BetterKVCへようこそ。</b><br>BetterKVCの詳しい使い方を見るには、右上のBetterKVCと書かれたボタンを押し、BetterKVCのヘルプを確認してください。</div></div>');
+  $('#area-m3').prepend('<div class="portlet portlet-s portlet-break" id="m3-panel"><div class="portlet-box" id="m3-panel"><div class="portlet-title clearfix" id="m3-panel"> <img src="https://i.imgur.com/YHw3Ror.png"><span>BetterKVCからのお知らせ</span></div><b>BetterKVCへようこそ。</b><br>BetterKVCの詳しい使い方を見るには、右上のBetterKVCと書かれたボタンを押し、BetterKVCのヘルプを確認してください。</div></div>');
 }
 
 function sleep(waitSec, callbackFunc) {
